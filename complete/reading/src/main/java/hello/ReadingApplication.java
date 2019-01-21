@@ -7,6 +7,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -29,13 +30,13 @@ public class ReadingApplication {
 	}
 
 	@RequestMapping("/to-read")
-	public String toRead() {
+	public ResponseEntity<String> toRead() {
 		return bookService.readingList();
 	}
 
 	@RequestMapping("/to-read/v2")
-	public String toReadV2() {
-		return bookService2.readingListV2();
+	public ResponseEntity<String> toReadV2() {
+		return bookService2.readingListV2("TestInputVariable");
 	}
 
 	public static void main(String[] args) {

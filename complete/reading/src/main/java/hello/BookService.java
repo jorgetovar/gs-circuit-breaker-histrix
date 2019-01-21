@@ -4,6 +4,8 @@ import java.net.URI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,15 +24,15 @@ public class BookService {
 
 	@HystrixCommand(fallbackMethod = "reliable", commandProperties = {
 			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "6000") })
-	public String readingList() {
+	public ResponseEntity<String> readingList() {
 		URI uri = URI.create("http://localhost:8090/recommended");
 		logger.info("Calling V1....");
-		return this.restTemplate.getForObject(uri, String.class);
+		return this.restTemplate.getForEntity(uri, String.class);
 	}
 
-	public String reliable() {
+	public ResponseEntity<String> temp() {
 		logger.info("Calling FALLBACK V1....");
-		return "Cloud Native Java (O'Reilly)";
+		return new ResponseEntity<>("Error V1", HttpStatus.SERVICE_UNAVAILABLE);
 	}
 
 }
