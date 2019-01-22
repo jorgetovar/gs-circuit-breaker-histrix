@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import co.com.bancodebogota.RestExchange;
+
 @SpringBootApplication
 @RestController
 @EnableCircuitBreaker
@@ -28,14 +30,19 @@ public class ReadingApplication {
 	public RestTemplate rest(RestTemplateBuilder builder) {
 		return builder.build();
 	}
+	
+	@Bean
+	public RestExchange restExchange() {
+		return new RestExchange();
+	}
 
 	@RequestMapping("/to-read")
-	public ResponseEntity<String> toRead() {
+	public ResponseEntity<BookDto> toRead() {
 		return bookService.readingList();
 	}
 
 	@RequestMapping("/to-read/v2")
-	public ResponseEntity<String> toReadV2() {
+	public ResponseEntity<BookDto> toReadV2() {
 		return bookService2.readingListV2("TestInputVariable");
 	}
 

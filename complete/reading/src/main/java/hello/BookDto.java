@@ -1,7 +1,7 @@
 package hello;
 
 public class BookDto {
-
+	
 	public BookDto() {
 		super();
 	}

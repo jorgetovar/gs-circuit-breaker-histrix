@@ -20,7 +20,7 @@ public class BookstoreApplication {
 		Thread.sleep(2000);
 		logger.info("ESB CALL ....");
 		String title = "Spring in Action (Manning), Cloud Native Java (O'Reilly), Learning Spring Boot (Packt)";
-		return new ResponseEntity<>(new BookDto(title), HttpStatus.CONFLICT);
+		return new ResponseEntity<>(new BookDto(title), HttpStatus.SERVICE_UNAVAILABLE);
 	}
 
 	public static void main(String[] args) {
