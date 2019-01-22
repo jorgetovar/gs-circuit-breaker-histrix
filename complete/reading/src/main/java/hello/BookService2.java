@@ -28,15 +28,17 @@ public class BookService2 {
 			@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "20000") })
 	public ResponseEntity<String> readingListV2(String x) {
 		URI uri = URI.create("http://localhost:8090/recommended");
-		logger.info("Calling V2....");
+		logger.info("Calling REAL_INTEGRATION V2....");
 		logger.info(x);
 		return this.restTemplate.getForEntity(uri, String.class);
 
 	}
-
-	public ResponseEntity<String> temp(String x) {
+	
+	@HystrixCommand
+	public ResponseEntity<String> temp(String x, Throwable e) {
 		logger.info("We must handle request with {} body", x);
 		logger.info("Calling FALLBACK V2....");
+		logger.info("Exception", e);
 		return new ResponseEntity<>("Error V2", HttpStatus.SERVICE_UNAVAILABLE);
 	}
 

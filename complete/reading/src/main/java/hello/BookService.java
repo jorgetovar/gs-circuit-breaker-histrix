@@ -24,15 +24,15 @@ public class BookService {
 
 	@HystrixCommand(fallbackMethod = "reliable", commandProperties = {
 			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "6000") })
-	public ResponseEntity<String> readingList() {
+	public ResponseEntity<BookDto> readingList() {
 		URI uri = URI.create("http://localhost:8090/recommended");
 		logger.info("Calling V1....");
-		return this.restTemplate.getForEntity(uri, String.class);
+		return this.restTemplate.getForEntity(uri, BookDto.class);
 	}
 
-	public ResponseEntity<String> temp() {
+	public ResponseEntity<BookDto> temp() {
 		logger.info("Calling FALLBACK V1....");
-		return new ResponseEntity<>("Error V1", HttpStatus.SERVICE_UNAVAILABLE);
+		return new ResponseEntity<>(new BookDto("Error Managment V2"), HttpStatus.SERVICE_UNAVAILABLE);
 	}
 
 }
