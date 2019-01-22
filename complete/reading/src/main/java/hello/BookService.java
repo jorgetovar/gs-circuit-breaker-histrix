@@ -39,7 +39,7 @@ public class BookService {
 	@HystrixCommand()
 	public ResponseEntity<BookDto> temp(Throwable e) {
 		logger.info("Calling FALLBACK V1....");
-		logger.info("Exception", e);
+		//logger.info("Exception", e);
 		return new ResponseEntity<>(new BookDto("Error Managment V1"), HttpStatus.SERVICE_UNAVAILABLE);
 	}
 

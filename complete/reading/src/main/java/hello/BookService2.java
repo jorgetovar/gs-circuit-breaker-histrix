@@ -31,7 +31,11 @@ public class BookService2 {
 		URI uri = URI.create("http://localhost:8090/recommended");
 		logger.info("Calling REAL_INTEGRATION V2....");
 		logger.info(x);
-		return restExchange.exchange(uri.toString(), null, HttpMethod.GET, BookDto.class);
+		ResponseEntity<BookDto> bookRs = restExchange.exchange(uri.toString(), null, HttpMethod.GET, BookDto.class);
+		if (bookRs.getStatusCode().is5xxServerError()) {
+			throw new IntegrationException("Error in integration");
+		}
+		return bookRs;
 
 	}
 
@@ -39,7 +43,7 @@ public class BookService2 {
 	public ResponseEntity<BookDto> temp(String x, Throwable e) {
 		logger.info("We must handle request with {} body", x);
 		logger.info("Calling FALLBACK V2....");
-		logger.info("Exception", e);
+		//logger.info("Exception", e);
 		return new ResponseEntity<>(new BookDto("Error Managment V2"), HttpStatus.SERVICE_UNAVAILABLE);
 	}
 
